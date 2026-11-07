@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JARVIS AI</title>
+<style>
+body {
+  background: #000;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  padding: 40px 10px;
+}
+h1 { letter-spacing: 10px; }
+#circulo {
+  border: 3px solid white;
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 40px auto;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+button {
+  background: white;
+  color: black;
+  padding: 18px 35px;
+  border-radius: 30px;
+  font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<h1>J.A.R.V.I.S</h1>
+<p>SISTEMA EN LÍNEA</p>
+
+<div id="circulo">J.A.R.V.I.S</div>
+
+<button onclick="activar()">HABLAR</button>
+
+<p id="respuesta">Esperando órdenes...</p>
+
+<script>
+function activar() {
+  const Reconocimiento =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!Reconocimiento) {
+    document.getElementById("respuesta").innerText =
+    "Tu navegador no admite reconocimiento de voz.";
+    return;
+  }
+
+  const voz = new Reconocimiento();
+  voz.lang = "es-ES";
+  voz.onresult = function(e) {
+    let texto = e.results[0][0].transcript;
+    document.getElementById("respuesta").innerText =
+    "Te escucho: " + texto;
+
+    let audio = new SpeechSynthesisUtterance(
+      "A sus órdenes. He escuchado " + texto
+    );
+    audio.lang = "es-ES";
+    speechSynthesis.speak(audio);
+  };
+  voz.start();
+}
+</script>
+
+</body>
+  </html>
+  
